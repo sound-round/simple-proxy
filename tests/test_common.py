@@ -32,7 +32,7 @@ def test_request(httpx, response):
     httpx.return_value = response(json=OPENAI_RESPONSE_BODY)
     
     res = client.post(
-        "/request", json={"url": url, "body": "request body"}, headers={"customer-header": "CUSTOM_HEADER"}
+        "/request", json={"url": url, "body": "request body"}, headers={"authorization": "Bearer 123"}
     )
 
     assert res.status_code == 200
@@ -45,5 +45,5 @@ def test_request(httpx, response):
 
     assert req.method == "POST"
     assert req.url == url
-    assert req.headers["customer-header"] == "CUSTOM_HEADER"
+    assert req.headers["authorization"] == "Bearer 123"
     assert req.content == b'{"body": "request body"}'
