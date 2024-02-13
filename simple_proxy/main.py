@@ -31,6 +31,7 @@ async def process_request(request: Request):
         response = await send_request(url, body, headers, method)
         status_code = response.status_code
         response.raise_for_status()
+        # TODO: add support for other body types
         return response.json()
 
     except HTTPStatusError as exc:
