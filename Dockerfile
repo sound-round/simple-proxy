@@ -20,4 +20,4 @@ RUN poetry config virtualenvs.create false \
 
 COPY . /app
 
-CMD ["poetry", "run", "uvicorn", "simple_proxy.main:app", "--reload", "--host", "0.0.0.0", "--port", "80"]
+CMD ["poetry", "run", "uvicorn", "simple_proxy.main:app", "--reload", "--host", "127.0.0.1", "--port", "80"]
