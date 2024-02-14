@@ -22,9 +22,8 @@ async def process_request(request: Request):
     except ValueError:
         raise HTTPException(status_code=400, detail="Bad request")
     except KeyError:
-        raise HTTPException(status_code=400, detail="url is required")
-    headers = MutableHeaders(request.headers)
-    del headers["content-length"]
+        raise HTTPException(status_code=400, detail="url field is required")
+    headers = prepare_headers(request)
     method = request.method.lower()
 
     try:
@@ -36,3 +35,12 @@ async def process_request(request: Request):
 
     except HTTPStatusError as exc:
         raise HTTPException(status_code=status_code, detail=str(exc))
+
+
+def prepare_headers(request: Request) -> dict:
+    # how do make it more competent
+    headers = MutableHeaders(request.headers)
+    del headers["content-length"]
+    del headers["host"]
+    del headers["accept-encoding"]
+    return headers
